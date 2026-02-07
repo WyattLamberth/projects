@@ -42,16 +42,18 @@ int main() {
     mouse.lmb_down = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
     mouse.rmb_down = IsMouseButtonDown(MOUSE_RIGHT_BUTTON);
 
-    // texture start
-    BeginTextureMode(canvas);
-    DrawCircleV(mouse.pos_prev, line_thickness * 5.f, line_color);
-    DrawCircleV(mouse.pos, line_thickness * 5.f, line_color);
-    DrawLineEx(mouse.pos_prev, mouse.pos, line_thickness, line_color);
-
-    // texture end
-    EndTextureMode();
-    mouse.pos_prev = GetMousePosition();
-
+    if (mouse.lmb_down) {
+      // texture start
+      BeginTextureMode(canvas);
+      DrawCircleV(mouse.pos_prev, line_thickness * 5.f, line_color);
+      DrawCircleV(mouse.pos, line_thickness * 5.f, line_color);
+      DrawLineEx(mouse.pos_prev, mouse.pos, line_thickness, line_color);
+      // texture end
+      EndTextureMode();
+    } else {
+      mouse.pos_prev = GetMousePosition();
+    }
+    // draw start
     BeginDrawing();
 
     DrawTextureRec(canvas.texture,
@@ -62,6 +64,8 @@ int main() {
       DrawCircleLinesV(mouse.pos, line_thickness, line_color);
     if (mouse.rmb_down)
       clear_canvas(canvas);
+
+    // draw end
     EndDrawing();
   }
 
